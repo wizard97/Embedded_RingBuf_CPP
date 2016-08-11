@@ -29,7 +29,7 @@
         #endif
 
         #define RB_ATOMIC_START do { uint32_t _savedIS = xt_rsil(15) ;
-        #define RB_ATOMIC_END xt_wsr_ps(_savedIS) ;} while(0);
+        #define RB_ATOMIC_END xt_wsr_ps(_savedIS); } while(0);
 
     #else
         #define RB_ATOMIC_START {
@@ -53,24 +53,50 @@ public:
 
 RingBuf();
 
+/**
+*  Add element obj to the buffer
+* Return: true on success
+*/
 bool add(Type &obj);
 
+/**
+* Remove last element from buffer, and copy it to dest
+* Return: true on success
+*/
 bool pull(Type *dest);
 
+/**
+* Peek at num'th element in the buffer
+* Return: a pointer to the num'th element
+*/
+Type *peek(uint16_t num);
+
+/**
+* Return: true if buffer is full
+*/
 bool isFull();
 
+/**
+* Return: number of elements in buffer
+*/
 uint16_t numElements();
 
+/**
+* Return: true if buffer is empty
+*/
 bool isEmpty();
 
-Type *peek(uint16_t index);
-
 protected:
+/**
+* Calculates the index in the array of the oldest element
+* Return: index in array of element
+*/
 uint16_t getTail();
 
+// underlying array
 Type _buf[MaxElements];
-uint16_t _head;
 
+uint16_t _head;
 uint16_t _numElements;
 private:
 

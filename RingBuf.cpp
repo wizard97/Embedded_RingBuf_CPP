@@ -55,12 +55,12 @@ bool RingBuf<Type, MaxElements>::isEmpty()
 }
 
 template <typename Type, uint16_t MaxElements>
-Type *RingBuf<Type, MaxElements>::peek(uint16_t index)
+Type *RingBuf<Type, MaxElements>::peek(uint16_t num)
 {
-    if (index >= numElements)
+    if (num >= numElements)
         return NULL;
 
-    return &_buf[(getTail() + index)%MaxElements];
+    return &_buf[(getTail() + num)%MaxElements];
 }
 
 template <typename Type, uint16_t MaxElements>
