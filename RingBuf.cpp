@@ -1,70 +1,107 @@
-#include "RingBuf.h"
+//#include "RingBuf.h"
 
 template <typename Type, uint16_t MaxElements>
 RingBuf<Type, MaxElements>::RingBuf()
-: _buf{ 0 }
+//: _buf{ 0 }
 {
-    _numElements = 0;
+     RB_ATOMIC_START
+     {
+         _numElements = 0;
 
-    _head = 0;
+         _head = 0;
+     }
+     RB_ATOMIC_END
 }
 
 template <typename Type, uint16_t MaxElements>
 bool RingBuf<Type, MaxElements>::add(Type &obj)
 {
-    if (isFull())
-        return false;
+    RB_ATOMIC_START
+    {
+        if (isFull())
+            return false;
 
-    _buf[_head] = obj;
-    _head = (_head + 1)%MaxElements;
-    numElements++;
-    return true;
+        _buf[_head] = obj;
+        _head = (_head + 1)%MaxElements;
+        _numElements++;
+        return true;
+    }
+    RB_ATOMIC_END
 }
 
 template <typename Type, uint16_t MaxElements>
 bool RingBuf<Type, MaxElements>::pull(Type *dest)
 {
-    uint16_t tail;
+    RB_ATOMIC_START
+    {
+        uint16_t tail;
 
-    if (isEmpty())
-        return false;
+        if (isEmpty())
+            return false;
 
-    tail = getTail();
+        tail = getTail();
 
-    *dest = _buf[tail];
-    numElements--;
-    return true;
+        *dest = _buf[tail];
+        _numElements--;
+        return true;
+    }
+    RB_ATOMIC_END
 }
 
 template <typename Type, uint16_t MaxElements>
 bool RingBuf<Type, MaxElements>::isFull()
 {
-    return numElements >= MaxElements;
+    RB_ATOMIC_START
+    {
+        return _numElements >= MaxElements;
+    }
+    RB_ATOMIC_END
 }
 
 template <typename Type, uint16_t MaxElements>
 uint16_t RingBuf<Type, MaxElements>::numElements()
 {
-    return numElements;
+    RB_ATOMIC_START
+    {
+        return _numElements;
+    }
+    RB_ATOMIC_END
 }
 
 template <typename Type, uint16_t MaxElements>
 bool RingBuf<Type, MaxElements>::isEmpty()
 {
-    return !numElements;
+    RB_ATOMIC_START
+    {
+        return !_numElements;
+    }
+    RB_ATOMIC_END
 }
 
 template <typename Type, uint16_t MaxElements>
 Type *RingBuf<Type, MaxElements>::peek(uint16_t num)
 {
-    if (num >= numElements)
-        return NULL;
+    RB_ATOMIC_START
+    {
+        if (num >= _numElements)
+            return NULL;
 
-    return &_buf[(getTail() + num)%MaxElements];
+        return &_buf[(getTail() + num)%MaxElements];
+    }
+    RB_ATOMIC_END 
 }
 
+// ONLY CALL WHEN SAFE
 template <typename Type, uint16_t MaxElements>
 uint16_t RingBuf<Type, MaxElements>::getTail()
 {
     return (_head + (MaxElements - _numElements))%MaxElements;
 }
+/*
+void TemporaryFunction()
+{
+    RingBuf<bool, 1> TempObj;
+    bool b = true;
+    TempObj.add(b);
+}
+*/

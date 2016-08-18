@@ -1,5 +1,8 @@
-#ifndef RINGBUG_FIFO_H
-#define RINGBUF_FIFO_H
+#ifndef EM_RINGBUF_FIFO_CPP_H
+#define EM_RINGBUF_FIFO_CPP_H
+
+// TODO fix this
+#define NULL (void *)(0)
 
 #ifdef ARDUINO
     #include <Arduino.h>
@@ -46,7 +49,6 @@
 #endif
 
 template <typename Type, uint16_t MaxElements>
-
 class RingBuf
 {
 public:
@@ -101,4 +103,6 @@ uint16_t _numElements;
 private:
 
 };
+
+#include "RingBuf.cpp"
 #endif
