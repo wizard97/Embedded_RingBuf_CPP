@@ -42,7 +42,7 @@ Feel free to improve this library. Fork it, make your changes, then submit a pul
 ### Constructor
 
 ```c++
-RingBuf<typename Type, uint16_t MaxElements>();
+RingBufCPP<typename Type, uint16_t MaxElements>();
 ```
 
 Creates a new RingBuf object that can buffer up to MaxElements of type Type.

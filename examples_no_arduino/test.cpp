@@ -5,7 +5,7 @@
 
 int main()
 {
-    RingBuf<int, 5> q;
+    RingBufCPP<int, 5> q;
     int tmp = 12;
     //q.add(tmp);
 
