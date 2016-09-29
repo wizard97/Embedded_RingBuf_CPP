@@ -1,4 +1,4 @@
-# ArduinoRingBuffer
+# Embedded RingBufCPP
 
 This is a simple ring (FIFO) buffer queuing library for embedded platforms, such as Arduino's. This library is based on a previous one I wrote, only now in C++ instead of C. It uses C++'s templating, so weird no more weird pointer casting, and deep copies of objects are supported. It has concurrency protection built in, so feel free to do operations
 on the buffer inside of ISR's. All memory is statically allocated at compile time, so no heap memory is used. It can buffer any fixed size object (ints, floats, structs, objects, etc...).
