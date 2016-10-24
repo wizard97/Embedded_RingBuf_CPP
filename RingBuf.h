@@ -71,7 +71,7 @@ bool pull(Type *dest)
 * Peek at num'th element in the buffer
 * Return: a pointer to the num'th element
 */
-Type peek(uint16_t num)
+Type* peek(uint16_t num)
 {
     Type *ret = NULL;
 
