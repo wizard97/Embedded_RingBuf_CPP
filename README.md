@@ -22,7 +22,7 @@ The library currently supports:
 
 ## Install
 
-This library is now available in the Arduino Library Manager, directly in the IDE. Go to `Sketch > Include Library > Manage Libraries` and search for `RingBuf`.
+This library is now available in the Arduino Library Manager, directly in the IDE. Go to `Sketch > Include Library > Manage Libraries` and search for `RingBufCPP`.
 
 To manually install this library, download this file as a zip, and extract the resulting folder into your Arduino Libraries folder. [Installing an Arduino Library] (https://www.arduino.cc/en/Guide/Libraries).
 
@@ -42,7 +42,7 @@ Feel free to improve this library. Fork it, make your changes, then submit a pul
 ### Constructor
 
 ```c++
-RingBufCPP<typename Type, uint16_t MaxElements>();
+RingBufCPP<typename Type, size_t MaxElements>();
 ```
 
 Creates a new RingBuf object that can buffer up to MaxElements of type Type.
@@ -78,7 +78,7 @@ Pull the first element out of the buffer. The first element is copied into the l
 
 ### numElements()
 ```c++
-uint16_t numElements();
+size_t numElements();
 ```
 
 Returns number of elements in the buffer.

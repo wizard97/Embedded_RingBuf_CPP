@@ -3,7 +3,7 @@
 
 #include "RingBufHelpers.h"
 
-template <typename Type, uint16_t MaxElements>
+template <typename Type, size_t MaxElements>
 class RingBufCPP
 {
 public:
@@ -49,7 +49,7 @@ bool add(Type &obj)
 bool pull(Type *dest)
 {
     bool ret = false;
-    uint16_t tail;
+    size_t tail;
 
     RB_ATOMIC_START
     {
@@ -71,7 +71,7 @@ bool pull(Type *dest)
 * Peek at num'th element in the buffer
 * Return: a pointer to the num'th element
 */
-Type* peek(uint16_t num)
+Type* peek(size_t num)
 {
     Type *ret = NULL;
 
@@ -106,9 +106,9 @@ bool isFull()
 /**
 * Return: number of elements in buffer
 */
-uint16_t numElements()
+size_t numElements()
 {
-    uint16_t ret;
+    size_t ret;
 
     RB_ATOMIC_START
     {
@@ -141,7 +141,7 @@ protected:
 * Calculates the index in the array of the oldest element
 * Return: index in array of element
 */
-uint16_t getTail()
+size_t getTail()
 {
     return (_head + (MaxElements - _numElements))%MaxElements;
 }
@@ -150,8 +150,8 @@ uint16_t getTail()
 // underlying array
 Type _buf[MaxElements];
 
-uint16_t _head;
-uint16_t _numElements;
+size_t _head;
+size_t _numElements;
 private:
 
 };
