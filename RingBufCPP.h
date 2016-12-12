@@ -71,7 +71,7 @@ bool pull(Type *dest)
 * Peek at num'th element in the buffer
 * Return: a pointer to the num'th element
 */
-Type* peek(size_t num)
+Type* peek(size_t num) const
 {
     Type *ret = NULL;
 
@@ -89,7 +89,7 @@ Type* peek(size_t num)
 /**
 * Return: true if buffer is full
 */
-bool isFull()
+bool isFull() const
 {
     bool ret;
 
@@ -106,7 +106,7 @@ bool isFull()
 /**
 * Return: number of elements in buffer
 */
-size_t numElements()
+size_t numElements() const
 {
     size_t ret;
 
@@ -123,7 +123,7 @@ size_t numElements()
 /**
 * Return: true if buffer is empty
 */
-bool isEmpty()
+bool isEmpty() const
 {
     bool ret;
 
@@ -141,7 +141,7 @@ protected:
 * Calculates the index in the array of the oldest element
 * Return: index in array of element
 */
-size_t getTail()
+size_t getTail() const
 {
     return (_head + (MaxElements - _numElements))%MaxElements;
 }
