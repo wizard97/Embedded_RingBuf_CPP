@@ -23,7 +23,7 @@ RingBufCPP()
 *  Add element obj to the buffer
 * Return: true on success
 */
-bool add(Type &obj)
+bool add(const Type &obj)
 {
     bool ret = false;
     RB_ATOMIC_START
