@@ -22,7 +22,9 @@ The library currently supports:
 
 ## Install
 
-This library is now available in the Arduino Library Manager, directly in the IDE. Go to `Sketch > Include Library > Manage Libraries` and search for `RingBufCPP`.
+
+This library is now available in the Arduino Library Manager, directly in the IDE. Go to `Sketch > Include Library > Manage Libraries` and search for `RingBufCPP`. Then `#include <RingBufCPP.h>` in your sketch.
+
 
 To manually install this library, download this file as a zip, and extract the resulting folder into your Arduino Libraries folder. [Installing an Arduino Library] (https://www.arduino.cc/en/Guide/Libraries).
 
