@@ -1,7 +1,6 @@
 #ifndef EM_RINGBUF_CPP_H
 #define EM_RINGBUF_CPP_H
 
-#include "RingBufHelpers.h"
 #include "SimplyAtomic/SimplyAtomic.h"
 
 template <typename Type, size_t MaxElements>
