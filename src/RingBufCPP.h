@@ -2,6 +2,7 @@
 #define EM_RINGBUF_CPP_H
 
 #include "RingBufHelpers.h"
+#include "SimplyAtomic/SimplyAtomic.h"
 
 template <typename Type, size_t MaxElements>
 class RingBufCPP
@@ -10,13 +11,12 @@ public:
 
 RingBufCPP()
 {
-     RB_ATOMIC_START
+     ATOMIC()
      {
          _numElements = 0;
 
          _head = 0;
      }
-     RB_ATOMIC_END
 }
 
 /**
@@ -26,7 +26,8 @@ RingBufCPP()
 bool add(const Type &obj)
 {
     bool ret = false;
-    RB_ATOMIC_START
+
+    ATOMIC()
     {
         if (!isFull()) {
             _buf[_head] = obj;
@@ -36,7 +37,6 @@ bool add(const Type &obj)
             ret = true;
         }
     }
-    RB_ATOMIC_END
 
     return ret;
 }
@@ -51,7 +51,7 @@ bool pull(Type *dest)
     bool ret = false;
     size_t tail;
 
-    RB_ATOMIC_START
+    ATOMIC()
     {
         if (!isEmpty()) {
             tail = getTail();
@@ -61,7 +61,30 @@ bool pull(Type *dest)
             ret = true;
         }
     }
-    RB_ATOMIC_END
+
+    return ret;
+}
+
+
+/**
+* Remove last element from buffer, and copy it to dest
+* Return: true on success
+*/
+bool pull(Type &dest)
+{
+    bool ret = false;
+    size_t tail;
+
+    ATOMIC()
+    {
+        if (!isEmpty()) {
+            tail = getTail();
+            dest = _buf[tail];
+            _numElements--;
+
+            ret = true;
+        }
+    }
 
     return ret;
 }
@@ -75,12 +98,11 @@ Type* peek(size_t num) const
 {
     Type *ret = NULL;
 
-    RB_ATOMIC_START
+    ATOMIC()
     {
         if (num < _numElements) //make sure not out of bounds
             ret = &_buf[(getTail() + num)%MaxElements];
     }
-    RB_ATOMIC_END
 
     return ret;
 }
@@ -93,11 +115,10 @@ bool isFull() const
 {
     bool ret;
 
-    RB_ATOMIC_START
+    ATOMIC()
     {
         ret = _numElements >= MaxElements;
     }
-    RB_ATOMIC_END
 
     return ret;
 }
@@ -110,11 +131,10 @@ size_t numElements() const
 {
     size_t ret;
 
-    RB_ATOMIC_START
+    ATOMIC()
     {
         ret = _numElements;
     }
-    RB_ATOMIC_END
 
     return ret;
 }
@@ -127,11 +147,10 @@ bool isEmpty() const
 {
     bool ret;
 
-    RB_ATOMIC_START
+    ATOMIC()
     {
         ret = !_numElements;
     }
-    RB_ATOMIC_END
 
     return ret;
 }
