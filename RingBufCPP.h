@@ -42,6 +42,16 @@ bool add(const Type &obj)
 }
 
 /**
+* Convenience alias of add.
+*/
+bool push(const Type &obj) { return add(obj); }
+
+/**
+* Convenience alias of add.
+*/
+bool append(const Type &obj) { return add(obj); }
+
+/**
 *  Prepend element obj to the buffer
 * Return: true on success
 */
@@ -91,7 +101,7 @@ bool pull(Type *dest)
 
 /**
 * Remove last element from buffer, and copy it to dest. This is the
-* inverse of add.
+* inverse of push/add/append.
 * Return: true on success
 */
 bool pop(Type *dest)
