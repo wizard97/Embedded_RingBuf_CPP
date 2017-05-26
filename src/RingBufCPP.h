@@ -77,7 +77,7 @@ bool prepend(const Type &obj)
 * inverse of prepend.
 * Return: true on success
 */
-bool pull(Type *dest)
+bool pull(Type *dest = nullptr)
 {
     bool ret = false;
     size_t tail;
@@ -86,7 +86,8 @@ bool pull(Type *dest)
     {
         if (!isEmpty()) {
             tail = getTail();
-            *dest = _buf[tail];
+            if (dest)
+                *dest = _buf[tail];
             _numElements--;
 
             ret = true;
@@ -110,14 +111,15 @@ bool pull(Type &dest) { return pull(&dest); }
 * inverse of push/add/append.
 * Return: true on success
 */
-bool pop(Type *dest)
+bool pop(Type *dest = nullptr)
 {
     bool ret = false;
 
     ATOMIC()
     {
         if (!isEmpty()) {
-            *dest = _buf[_head];
+            if (dest)
+                *dest = _buf[_head];
             _head = (_head + MaxElements - 1)%MaxElements;
             _numElements--;
 
