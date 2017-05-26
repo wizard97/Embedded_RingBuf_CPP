@@ -20,7 +20,7 @@ RingBufCPP()
 }
 
 /**
-*  Add element obj to the buffer
+*  Append element obj to the buffer
 * Return: true on success
 */
 bool add(const Type &obj)
@@ -41,9 +41,32 @@ bool add(const Type &obj)
     return ret;
 }
 
+/**
+*  Prepend element obj to the buffer
+* Return: true on success
+*/
+bool prepend(const Type &obj)
+{
+    bool ret = false;
+    size_t tail;
+    RB_ATOMIC_START
+    {
+        if (!isFull()) {
+            _numElements++;
+            tail = getTail();
+            _buf[tail] = obj;
+
+            ret = true;
+        }
+    }
+    RB_ATOMIC_END
+
+    return ret;
+}
 
 /**
-* Remove last element from buffer, and copy it to dest
+* Remove first element from buffer, and copy it to dest. This is the
+* inverse of prepend.
 * Return: true on success
 */
 bool pull(Type *dest)
@@ -56,6 +79,30 @@ bool pull(Type *dest)
         if (!isEmpty()) {
             tail = getTail();
             *dest = _buf[tail];
+            _numElements--;
+
+            ret = true;
+        }
+    }
+    RB_ATOMIC_END
+
+    return ret;
+}
+
+/**
+* Remove last element from buffer, and copy it to dest. This is the
+* inverse of add.
+* Return: true on success
+*/
+bool pop(Type *dest)
+{
+    bool ret = false;
+
+    RB_ATOMIC_START
+    {
+        if (!isEmpty()) {
+            *dest = _buf[_head];
+            _head = (_head + MaxElements - 1)%MaxElements;
             _numElements--;
 
             ret = true;
