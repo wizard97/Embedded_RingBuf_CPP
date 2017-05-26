@@ -61,6 +61,15 @@ bool add(Type &obj);
 
 Append an element to the buffer. Return true on success, false on a full buffer.
 
+### prepend()
+
+```c++
+bool prepend(Type &obj);
+```
+
+Prepend an element to the buffer. Return true on success, false on a full buffer.
+
+
 ### peek()
 
 ```c++
@@ -78,6 +87,14 @@ bool pull(Type &dest);
 
 Pull the first element out of the buffer. The first element is copied into the location pointed to or referenced by dest. Returns false if the buffer is empty, otherwise returns true on success.
 
+### pop()
+
+```c++
+bool pop(Type *dest);
+bool pop(Type &dest);
+```
+
+Pop the last element out of the buffer. The last element is copied into the location pointed to or referenced by dest. Returns false if the buffer is empty, otherwise returns true on success.
 
 ### numElements()
 ```c++
