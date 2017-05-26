@@ -53,13 +53,17 @@ Creates a new RingBuf object that can buffer up to MaxElements of type Type.
 ## Methods
 
 
-### add()
+### add() / append() / push()
 
 ```c++
 bool add(Type &obj);
+bool append(Type &obj);
+bool push(Type &obj);
 ```
 
 Append an element to the buffer. Return true on success, false on a full buffer.
+
+All three methods are identical, except for their name.
 
 ### prepend()
 
