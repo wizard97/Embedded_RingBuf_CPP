@@ -85,18 +85,18 @@ Peek at the num'th element in the buffer. Returns a pointer to the location of t
 ### pull()
 
 ```c++
-bool pull(Type *dest);
+bool pull(Type *dest = nullptr);
 ```
 
-Pull the first element out of the buffer. The first element is copied into the location pointed to by dest. Returns false if the buffer is empty, otherwise returns true on success.
+Pull the first element out of the buffer. If a non-null pointer is passed, the removed element is copied into the location pointed to by dest. Returns false if the buffer is empty, otherwise returns true on success.
 
 ### pop()
 
 ```c++
-bool pop(Type *dest);
+bool pop(Type *dest = nullptr);
 ```
 
-Pop the last element out of the buffer. The last element is copied into the location pointed to by dest. Returns false if the buffer is empty, otherwise returns true on success.
+Pop the last element out of the buffer. If a non-null pointer is passed, the removed element is copied into the location pointed to by dest. Returns false if the buffer is empty, otherwise returns true on success.
 
 ### numElements()
 ```c++
