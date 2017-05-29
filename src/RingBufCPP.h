@@ -69,24 +69,7 @@ bool pull(Type *dest)
 * Remove last element from buffer, and copy it to dest
 * Return: true on success
 */
-bool pull(Type &dest)
-{
-    bool ret = false;
-    size_t tail;
-
-    ATOMIC()
-    {
-        if (!isEmpty()) {
-            tail = getTail();
-            dest = _buf[tail];
-            _numElements--;
-
-            ret = true;
-        }
-    }
-
-    return ret;
-}
+bool pull(Type &dest) { return pull(&dest); }
 
 
 /**
