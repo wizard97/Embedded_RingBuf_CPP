@@ -73,9 +73,10 @@ Peek at the num'th element in the buffer. Returns a pointer to the location of t
 
 ```c++
 bool pull(Type *dest);
+bool pull(Type &dest);
 ```
 
-Pull the first element out of the buffer. The first element is copied into the location pointed to by dest. Returns false if the buffer is empty, otherwise returns true on success.
+Pull the first element out of the buffer. The first element is copied into the location pointed to or referenced by dest. Returns false if the buffer is empty, otherwise returns true on success.
 
 
 ### numElements()
