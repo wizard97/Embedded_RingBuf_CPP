@@ -6,7 +6,7 @@ on the buffer inside of ISR's. All memory is statically allocated at compile tim
 ## FAQ's
  <dl>
  <dt>I only have a C compiler for my platform</dt>
-   <dd>No worries, try the vanilla C version of the library.</dd>
+   <dd>No worries, try the <a href="https://github.com/wizard97/ArduinoRingBuffer">vanilla C version of the library</a>.</dd>
  </dl>
 
 
