@@ -6,7 +6,7 @@ on the buffer inside of ISR's. All memory is statically allocated at compile tim
 ## FAQ's
  <dl>
  <dt>I only have a C compiler for my platform</dt>
-   <dd>No worries, try the vanilla C version of the library.</dd>
+   <dd>No worries, try the <a href="https://github.com/wizard97/ArduinoRingBuffer">vanilla C version of the library</a>.</dd>
  </dl>
 
 
@@ -26,7 +26,7 @@ The library currently supports:
 This library is now available in the Arduino Library Manager, directly in the IDE. Go to `Sketch > Include Library > Manage Libraries` and search for `RingBufCPP`. Then `#include <RingBufCPP.h>` in your sketch.
 
 
-To manually install this library, download this file as a zip, and extract the resulting folder into your Arduino Libraries folder. [Installing an Arduino Library] (https://www.arduino.cc/en/Guide/Libraries).
+To manually install this library, download this file as a zip, and extract the resulting folder into your Arduino Libraries folder. [Installing an Arduino Library](https://www.arduino.cc/en/Guide/Libraries).
 
 ## Examples
 
