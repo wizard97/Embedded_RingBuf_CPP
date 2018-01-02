@@ -68,6 +68,28 @@ bool pull(Type *dest)
 
 
 /**
+* Remove last element from buffer.
+* Return: true on success
+*/
+bool pull()
+{
+	bool ret = false;
+
+	RB_ATOMIC_START
+	{
+		if (!isEmpty()) {
+			_numElements--;
+
+			ret = true;
+		}
+	}
+		RB_ATOMIC_END
+
+		return ret;
+}
+
+
+/**
 * Peek at num'th element in the buffer
 * Return: a pointer to the num'th element
 */
