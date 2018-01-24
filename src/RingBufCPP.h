@@ -114,7 +114,7 @@ bool pull()
 * Peek at num'th element in the buffer
 * Return: a pointer to the num'th element
 */
-Type* peek(size_t num) const
+Type* peek(size_t num)
 {
     Type *ret = NULL;
 
