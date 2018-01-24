@@ -40,6 +40,28 @@ bool add(const Type &obj)
     return ret;
 }
 
+/**
+*  Add element obj to the buffer, removing last if full.
+* Return: true on success
+*/
+bool addForce(const Type &obj)
+{
+	bool ret = false;
+
+	ATOMIC()
+	{
+		if (isFull()) {
+			_numElements--;
+		}
+		_buf[_head] = obj;
+		_head = (_head + 1) % MaxElements;
+		_numElements++;
+
+		ret = true;
+	}
+
+	return ret;
+}
 
 /**
 * Remove last element from buffer, and copy it to dest
