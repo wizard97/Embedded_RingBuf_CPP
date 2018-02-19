@@ -28,7 +28,7 @@ SOFTWARE.
 #include "SimplyAtomic.h" //https://github.com/wizard97/SimplyAtomic
 
 template <typename Type, size_t MaxElements>
-class RingBufCP
+class RingBufCPP
 {
 public:
 
