@@ -53,13 +53,26 @@ Creates a new RingBuf object that can buffer up to MaxElements of type Type.
 ## Methods
 
 
-### add()
+### add() / append() / push()
 
 ```c++
 bool add(Type &obj);
+bool append(Type &obj);
+bool push(Type &obj);
 ```
 
 Append an element to the buffer. Return true on success, false on a full buffer.
+
+All three methods are identical, except for their name.
+
+### prepend()
+
+```c++
+bool prepend(Type &obj);
+```
+
+Prepend an element to the buffer. Return true on success, false on a full buffer.
+
 
 ### peek()
 
@@ -72,11 +85,20 @@ Peek at the num'th element in the buffer. Returns a pointer to the location of t
 ### pull()
 
 ```c++
-bool pull(Type *dest);
+bool pull(Type *dest = nullptr);
+bool pull(Type &dest);
 ```
 
-Pull the first element out of the buffer. The first element is copied into the location pointed to by dest. Returns false if the buffer is empty, otherwise returns true on success.
+Pull the first element out of the buffer. If a non-null pointer is passed, the removed element is copied into the location pointed to or referenced by dest. Returns false if the buffer is empty, otherwise returns true on success.
 
+### pop()
+
+```c++
+bool pop(Type *dest = nullptr);
+bool pop(Type &dest);
+```
+
+Pop the last element out of the buffer. If a non-null pointer is passed, the removed element is copied into the location pointed to or referenced by dest. Returns false if the buffer is empty, otherwise returns true on success.
 
 ### numElements()
 ```c++
