@@ -1,4 +1,4 @@
-RingBufCPP		KEYWORD1
+RingBufCPP	KEYWORD1
 
 isFull	KEYWORD2
 isEmpty	KEYWORD2
