@@ -1,15 +1,18 @@
 #ifndef EM_RINGBUF_HELPERS_CPP_H
 #define EM_RINGBUF_HELPERS_CPP_H
 
-// TODO fix this
-#ifndef NULL
-    #define NULL (void *)(0)
-#endif
 
 #ifdef ARDUINO
     #include <Arduino.h>
+#elif (defined(NRF51) || defined(NRF52) || defined(NRF52_SERIES))
+    // One of those defines is mandatory otherwise error is thrown in nrf.h
+    #ifndef NORDIC_NRF5x
+        #define NORDIC_NRF5x 1 // Common include for Nordic nRF5 SDK
+    #endif // NORDIC_NRF5x
+
+    #include "app_util_platform.h"
 #else
-    #include <stdint.h>
+    #include <stdint.h> // NOLINT
 #endif
 
 #ifdef ARDUINO
@@ -39,15 +42,18 @@
     #else
         #define RB_ATOMIC_START {
         #define RB_ATOMIC_END }
-        #warning “This library only fully supports AVR and ESP8266 Boards.”
+        #warning "This library only fully supports AVR and ESP8266 Boards."
         #warning "Operations on the buffer in ISRs are not safe!"
     #endif
 
+#elif defined(NORDIC_NRF5x)
+    #define RB_ATOMIC_START CRITICAL_REGION_ENTER()
+    #define RB_ATOMIC_END CRITICAL_REGION_EXIT()
 #else
     #define RB_ATOMIC_START {
     #define RB_ATOMIC_END }
     #warning "Operations on the buffer in ISRs are not safe!"
-    #warning "Impliment RB_ATOMIC_START and RB_ATOMIC_END macros for safe ISR operation!"
+    #warning "Implement RB_ATOMIC_START and RB_ATOMIC_END macros for safe ISR operation!"
 #endif
 
 #endif
