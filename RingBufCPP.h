@@ -20,25 +20,29 @@ RingBufCPP()
 }
 
 /**
-*  Add element obj to the buffer
-* Return: true on success
+* Add element obj to the buffer.
+*
+* If there is already MaxElements in the buffer,
+* the oldest element will either be overwritten (when overwrite is true) or
+* this add will have no effect (when overwrite is false).
+*
+* Return: true if there was room in the buffer to add this element
 */
-bool add(const Type &obj)
+bool add(const Type &obj, bool overwrite=false)
 {
-    bool ret = false;
+    bool full = false;
     RB_ATOMIC_START
     {
-        if (!isFull()) {
+        full = isFull();
+        if (!full || overwrite) {
             _buf[_head] = obj;
             _head = (_head + 1)%MaxElements;
-            _numElements++;
-
-            ret = true;
+            _numElements = full ? _numElements : (_numElements + 1);
         }
     }
     RB_ATOMIC_END
 
-    return ret;
+    return !full;
 }
 
 

@@ -56,10 +56,15 @@ Creates a new RingBuf object that can buffer up to MaxElements of type Type.
 ### add()
 
 ```c++
-bool add(Type &obj);
+bool add(const Type &obj, bool overwrite=false)
+
 ```
 
-Append an element to the buffer. Return true on success, false on a full buffer.
+Append an element to the buffer.
+If there is already MaxElements in the buffer,
+the oldest element will either be overwritten (when overwrite is true) or
+this add will have no effect (when overwrite is false).
+Return false on a full buffer.
 
 ### peek()
 
