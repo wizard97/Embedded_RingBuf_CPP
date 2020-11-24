@@ -140,15 +140,7 @@ bool isEmpty() const
     return ret;
 }
 
-/**
-* Returns the index in the array of the newest element
-* Return: index in array of element
-*/
-size_t getHead() const
-{
-  return _head;
-}
-
+protected:
 /**
 * Calculates the index in the array of the oldest element
 * Return: index in array of element
@@ -158,7 +150,6 @@ size_t getTail() const
     return (_head + (MaxElements - _numElements))%MaxElements;
 }
 
-protected:
 
 // underlying array
 Type _buf[MaxElements];
