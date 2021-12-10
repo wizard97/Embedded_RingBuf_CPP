@@ -47,7 +47,7 @@
     #define RB_ATOMIC_START {
     #define RB_ATOMIC_END }
     #warning "Operations on the buffer in ISRs are not safe!"
-    #warning "Impliment RB_ATOMIC_START and RB_ATOMIC_END macros for safe ISR operation!"
+    #warning "Implement RB_ATOMIC_START and RB_ATOMIC_END macros for safe ISR operation!"
 #endif
 
 #endif
