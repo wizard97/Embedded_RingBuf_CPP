@@ -72,7 +72,7 @@ void loop() {
 
 
 // This interrupt serve routine function is called whenever an interrupt fires on EVENT_PIN
-// An Event Struct will be appened to the buffer
+// An Event Struct will be appended to the buffer
 void isr_event()
 {
   struct Event e;

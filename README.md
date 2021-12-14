@@ -72,7 +72,7 @@ Return false on a full buffer.
 Type *peek(uint16_t num);
 ```
 
-Peek at the num'th element in the buffer. Returns a pointer to the location of the num'th element. If num is out of bounds or the num'th element is empty, a NULL pointer is returned. Note that this gives you direct memory access to the location of the num'th element in the buffer, allowing you to directly edit elements in the buffer. Note that while all of RingBuf's public methods are atomic (including this one), directly using the pointer returned from this method is not safe. If there is a possibility an interrupt could fire and remove/modify the item pointed to by the returned pointer, disable interrupts first with `noInterrupts()`, do whatever you need to do with the pointer, then you can reenable interrupts by calling `interrupts()`.
+Peek at the num'th element in the buffer. Returns a pointer to the location of the num'th element. If num is out of bounds or the num'th element is empty, a NULL pointer is returned. Note that this gives you direct memory access to the location of the num'th element in the buffer, allowing you to directly edit elements in the buffer. Note that while all of RingBuf's public methods are atomic (including this one), directly using the pointer returned from this method is not safe. If there is a possibility an interrupt could fire and remove/modify the item pointed to by the returned pointer, disable interrupts first with `noInterrupts()`, do whatever you need to do with the pointer, then you can re-enable interrupts by calling `interrupts()`.
 
 ### pull()
 
