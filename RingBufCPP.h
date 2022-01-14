@@ -148,16 +148,33 @@ size_t pull(Type *dest, size_t length)
 
 /**
 * Peek at num'th element in the buffer
-* Return: a pointer to the num'th element
+* Return: a pointer to the num'th element (nullptr if num is larger than the number of elements in the buffer)
 */
 Type* peek(size_t num)
 {
-    Type *ret = NULL;
+    Type *ret = nullptr;
 
     RB_ATOMIC_START
     {
         if (num < _numElements) //make sure not out of bounds
             ret = &_buf[(getTail() + num)%MaxElements];
+    }
+    RB_ATOMIC_END
+
+    return ret;
+}
+
+/**
+* Peek at oldest element in the buffer.
+* Return: a pointer to the element (nullptr if buffer is empty)
+*/
+Type* peek() {
+    Type *ret = nullptr;
+
+    RB_ATOMIC_START
+    {
+    if (_numElements > 0)
+        ret = &_buf[getTail()];
     }
     RB_ATOMIC_END
 
