@@ -30,7 +30,8 @@ RingBufCPP()
 */
 bool add(const Type &obj, bool overwrite=false)
 {
-    bool full = false;
+    bool ret = false;
+    
     RB_ATOMIC_START
     {
         full = isFull();
@@ -38,11 +39,12 @@ bool add(const Type &obj, bool overwrite=false)
             _buf[_head] = obj;
             _head = (_head + 1)%MaxElements;
             _numElements = full ? _numElements : (_numElements + 1);
+            ret = true;
         }
     }
     RB_ATOMIC_END
 
-    return !full;
+    return ret;
 }
 
 /**
@@ -60,13 +62,13 @@ size_t add(const Type *obj, size_t length, bool overwrite=false)
 
     RB_ATOMIC_START
     {
-        if((length > 0) && (length <= MaxElements)) { // Can't write more elements than the buffer size or zero elements.
+        if(length <= MaxElements) { // Can't write more elements than the buffer size or zero elements.
             if(!overwrite) {
                 // If overwrite is disabled, length should be trunked to the available space for writing in the buffer.
                 length = (MaxElements-_numElements) > length ? length : (MaxElements-_numElements);
             }
 
-            if(length > 0) { // Check is there's space left for writing after trunking length.
+            if(length > 0) {
                 if(length > (MaxElements-_head)) {
                     // Needs two memcpy.
                     memcpy(&_buf[_head],obj,sizeof(Type)*(MaxElements-_head)); // From _head to the end of _buf
@@ -191,7 +193,7 @@ bool isFull() const
 
     RB_ATOMIC_START
     {
-        ret = _numElements >= MaxElements;
+        ret = _numElements == MaxElements;
     }
     RB_ATOMIC_END
 
