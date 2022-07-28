@@ -59,7 +59,10 @@ bool pull(Type *dest)
     {
         if (!isEmpty()) {
             tail = getTail();
-            *dest = _buf[tail];
+            if (dest)
+            {
+              *dest = _buf[tail];
+            }
             _numElements--;
 
             ret = true;
